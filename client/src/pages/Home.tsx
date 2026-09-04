@@ -36,6 +36,7 @@ type DashboardTab = "overview" | "findings" | "guidance";
 
 const navItems = [
   { label: "Product", href: "#product" },
+  { label: "Learn", href: "/learn" },
   { label: "Features", href: "#features" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
@@ -368,7 +369,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer"><div className="container footer-top"><div className="footer-brand"><Logo /><p>A clearer starting point for safer systems.</p><span className="mono">© 2026 Aegis Security / SAMPLE BRAND</span></div><div className="footer-links"><div><span className="mono">PRODUCT</span><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#product">Security</a><a href="#faq">Documentation</a></div><div><span className="mono">COMPANY</span><a href="#top">About</a><a href="#get-started">Contact</a><a href="#get-started">Careers</a></div><div><span className="mono">RESOURCES</span><a href="#faq">Blog</a><a href="#how-it-works">Guides</a><a href="#faq">FAQ</a></div><div><span className="mono">LEGAL</span><a href="#top">Privacy policy</a><a href="#top">Terms</a><a href="#top">Cookie policy</a></div></div></div><div className="container footer-bottom"><span>Built for better digital habits.</span><div><a href="#top">LinkedIn placeholder</a><a href="#top">GitHub placeholder</a><a href="#top">Status placeholder</a></div></div></footer>
+      <footer className="site-footer"><div className="container footer-top"><div className="footer-brand"><Logo /><p>A clearer starting point for safer systems.</p><span className="mono">© 2026 Aegis Security / SAMPLE BRAND</span></div><div className="footer-links"><div><span className="mono">PRODUCT</span><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#product">Security</a><a href="#faq">Documentation</a></div><div><span className="mono">COMPANY</span><a href="#top">About</a><a href="#get-started">Contact</a><a href="#get-started">Careers</a></div><div><span className="mono">RESOURCES</span><a href="/learn#journal">Journal</a><a href="/learn">Guides</a><a href="#faq">FAQ</a></div><div><span className="mono">LEGAL</span><a href="#top">Privacy policy</a><a href="#top">Terms</a><a href="#top">Cookie policy</a></div></div></div><div className="container footer-bottom"><span>Built for better digital habits.</span><div><a href="#top">LinkedIn placeholder</a><a href="#top">GitHub placeholder</a><a href="#top">Status placeholder</a></div></div></footer>
     </div>
   );
 }
