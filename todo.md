@@ -9,3 +9,10 @@
 - [x] Add a responsible-use statement covering education, authorized testing, defensive security, CTFs, legal labs, and permission-based research. Included it in the hub and article content.
 - [x] Verify desktop/mobile layouts, navigation, buttons, important routes, console output, metadata, and accessibility basics. Type-check passed; key routes, robots.txt, sitemap.xml, and console output were checked.
 - [ ] Save a checkpoint and deliver only what was completed, what remains, and the next highest-priority task.
+
+## V2 Deployment Foundation Pass
+
+- [x] Inspect current build configuration, SPA routing, production domain, existing routes, assets, and SEO files. Existing site and learning routes render in the live browser; Vercel-specific SPA fallback was missing.
+- [x] Fix only critical deployment issues found in the existing project. Added a minimal `vercel.json` rewrite that preserves crawl files/assets while routing extensionless SPA paths to `index.html`.
+- [ ] Build/type-check and verify `/`, `/learn`, article routes, assets, `robots.txt`, and `sitemap.xml` in production.
+- [ ] Confirm the live deployment and stop before starting authentication, database, storage, or subscription phases.
