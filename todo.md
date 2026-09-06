@@ -37,3 +37,5 @@
 - [x] Validate Supabase configuration, Auth API reachability, project schema/RLS posture where safely queryable, route coverage, tests, and production build without creating users. Auth settings returned HTTP 200; Supabase config and existing auth tests passed; type-check/build passed; no application Supabase tables or RLS definitions exist yet, so there are no private app policies to verify.
 - [x] Publish the validated checkpoint and verify public/auth route responses in production. Published as checkpoint `37c363fb`; production route verification passed.
 - [x] Leave sign-up, sign-in, session persistence, logout, and password recovery live-flow testing explicitly pending for manual verification with a disposable account. No real account or credentials were requested or used.
+
+- [x] Move the Sign in control into a compact bordered box immediately to the left of the green Get Started button in the desktop header, while preserving mobile navigation and existing styles. Verified visually at desktop width and passed type-check.
