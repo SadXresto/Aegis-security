@@ -39,3 +39,5 @@
 - [x] Leave sign-up, sign-in, session persistence, logout, and password recovery live-flow testing explicitly pending for manual verification with a disposable account. No real account or credentials were requested or used.
 
 - [x] Move the Sign in control into a compact bordered box immediately to the left of the green Get Started button in the desktop header, while preserving mobile navigation and existing styles. Verified visually at desktop width and passed type-check.
+
+- [x] Position the existing Sign in and Get Started CTA buttons together on the navbar right with a consistent 16–24px gap, preserving all other design and functionality across desktop and mobile. Verified at desktop and mobile widths; type-check passed.

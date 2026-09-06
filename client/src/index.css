@@ -375,3 +375,6 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid 
 @media (max-width: 700px) { .auth-page { padding: 24px 16px 32px; }.auth-card { display: block; margin-top: 48px; }.auth-card__intro { padding: 28px 24px; }.brand-lockup { margin-bottom: 48px; }.auth-card__body { padding: 28px 24px; }.auth-switches { display: grid; justify-content: stretch; }.auth-switches button { text-align: left; }.account-hero { padding: 72px 0 32px; }.account-grid { grid-template-columns: 1fr; }.account-header { align-items: flex-start; gap: 14px; } }
 
 .header-signin { color: #bdc8d9; font-size: 12px; transition: color 180ms var(--ease-out); }.header-signin:hover { color: var(--white); }
+
+.header-actions { display: flex; align-items: center; gap: 18px; margin-left: auto; }.header-actions .header-cta { margin-left: 0; }
+@media (max-width: 900px) { .header-actions { gap: 16px; } }

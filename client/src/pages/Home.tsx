@@ -301,7 +301,7 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </nav>
-          <a className="button button--ghost button--small header-signin" href="/auth">Sign in</a><a className="button button--lime button--small header-cta" href="#get-started">Get Started <ArrowUpRight size={15} /></a>
+          <div className="header-actions"><a className="button button--ghost button--small header-signin" href="/auth">Sign in</a><a className="button button--lime button--small header-cta" href="#get-started">Get Started <ArrowUpRight size={15} /></a></div>
           <button className="mobile-menu-button" type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} onClick={() => setMobileOpen((current) => !current)}>
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
