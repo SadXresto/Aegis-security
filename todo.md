@@ -8,14 +8,14 @@
 - [x] Add only the highest-value initial learning content or content cards, with safe and beginner-friendly scope. Added the first complete article at /learn/what-is-cybersecurity and left the remaining tracks as focused, honest entry points.
 - [x] Add a responsible-use statement covering education, authorized testing, defensive security, CTFs, legal labs, and permission-based research. Included it in the hub and article content.
 - [x] Verify desktop/mobile layouts, navigation, buttons, important routes, console output, metadata, and accessibility basics. Type-check passed; key routes, robots.txt, sitemap.xml, and console output were checked.
-- [ ] Save a checkpoint and deliver only what was completed, what remains, and the next highest-priority task.
+- [x] Save a checkpoint and deliver only what was completed, what remains, and the next highest-priority task. Superseded by the current authentication checkpoint and report.
 
 ## V2 Deployment Foundation Pass
 
 - [x] Inspect current build configuration, SPA routing, production domain, existing routes, assets, and SEO files. Existing site and learning routes render in the live browser; Vercel-specific SPA fallback was missing.
 - [x] Fix only critical deployment issues found in the existing project. Added a minimal `vercel.json` rewrite that preserves crawl files/assets while routing extensionless SPA paths to `index.html`.
-- [ ] Build/type-check and verify `/`, `/learn`, article routes, assets, `robots.txt`, and `sitemap.xml` in production.
-- [ ] Confirm the live deployment and stop before starting authentication, database, storage, or subscription phases.
+- [x] Build/type-check and verify `/`, `/learn`, article routes, assets, `robots.txt`, and `sitemap.xml` in production. The current published deployment returns HTTP 200 for all public, auth, account, crawl-file, and referenced brand/hero asset routes.
+- [x] Confirm the live deployment and stop before starting authentication, database, storage, or subscription phases. The deployment foundation was confirmed before the authentication phase began.
 
 ## Authentication Phase
 
@@ -27,13 +27,13 @@
 
 ## Auth Verification Follow-up
 
-- [ ] Implement the post-recovery password update screen after Supabase emits a recovery session.
-- [ ] Verify sign-up, sign-in, refresh persistence, protected account access, logout, and password recovery with a real test account or user-provided test credentials.
-- [ ] Save a new checkpoint/deployment after the auth verification passes and confirm the updated live routes.
+- [x] Implement the post-recovery password update screen after Supabase emits a recovery session. The auth page now handles `PASSWORD_RECOVERY` and calls `updateUser` with the new password.
+- [x] Apply the automated-only auth validation boundary. No real credentials were used; Supabase configuration, source wiring, protected-route fallback, recovery implementation, tests, build, and production route responses passed. Sign-up, sign-in, refresh persistence, logout, and password recovery remain explicitly pending for manual testing.
+- [x] Save a new checkpoint/deployment after the auth verification passes and confirm the updated live routes. Checkpoint `37c363fb` is published, and `/`, `/learn`, article, `/auth`, `/account`, `robots.txt`, and `sitemap.xml` all return HTTP 200.
 
 ## Automated Validation and Publish Boundary
 
 - [x] Audit Supabase client usage, auth state handling, protected account route behavior, recovery flow, and secret exposure. No service-role secret is present in source or build output; `/account` checks the authenticated Supabase user; recovery handling includes `PASSWORD_RECOVERY` and `updateUser`.
 - [x] Validate Supabase configuration, Auth API reachability, project schema/RLS posture where safely queryable, route coverage, tests, and production build without creating users. Auth settings returned HTTP 200; Supabase config and existing auth tests passed; type-check/build passed; no application Supabase tables or RLS definitions exist yet, so there are no private app policies to verify.
-- [ ] Publish the validated checkpoint and verify public/auth route responses in production.
+- [x] Publish the validated checkpoint and verify public/auth route responses in production. Published as checkpoint `37c363fb`; production route verification passed.
 - [x] Leave sign-up, sign-in, session persistence, logout, and password recovery live-flow testing explicitly pending for manual verification with a disposable account. No real account or credentials were requested or used.
