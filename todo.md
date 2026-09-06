@@ -16,3 +16,24 @@
 - [x] Fix only critical deployment issues found in the existing project. Added a minimal `vercel.json` rewrite that preserves crawl files/assets while routing extensionless SPA paths to `index.html`.
 - [ ] Build/type-check and verify `/`, `/learn`, article routes, assets, `robots.txt`, and `sitemap.xml` in production.
 - [ ] Confirm the live deployment and stop before starting authentication, database, storage, or subscription phases.
+
+## Authentication Phase
+
+- [x] Inspect current project instructions and connector configuration for backend/auth availability. Enabled the existing Supabase API connector and confirmed the project already had working browser-safe Supabase credentials.
+- [x] Enable the existing full-stack backend/auth scaffold only if required and safe. Upgraded the existing project to the managed full-stack scaffold and restored the pre-existing Aegis public routes after resolving template conflicts.
+- [x] Implement email/password auth with persistent sessions, logout, reset flow, protected account surface, and clear loading/error states. Added `/auth`, `/account`, Supabase client setup, sign-up/sign-in/reset flows, session restoration, sign-out, and a discoverable homepage sign-in link.
+- [x] Preserve the public homepage, learning routes, SEO files, and existing design system. Restored the stable homepage and kept `/learn`, the article route, crawl files, and existing Signal & Shield styling intact.
+- [x] Build/type-check, verify auth states, and publish only after critical flows pass. Supabase credential tests, existing auth tests, type-check, production build, desktop screenshots, and mobile screenshots all passed.
+
+## Auth Verification Follow-up
+
+- [ ] Implement the post-recovery password update screen after Supabase emits a recovery session.
+- [ ] Verify sign-up, sign-in, refresh persistence, protected account access, logout, and password recovery with a real test account or user-provided test credentials.
+- [ ] Save a new checkpoint/deployment after the auth verification passes and confirm the updated live routes.
+
+## Automated Validation and Publish Boundary
+
+- [x] Audit Supabase client usage, auth state handling, protected account route behavior, recovery flow, and secret exposure. No service-role secret is present in source or build output; `/account` checks the authenticated Supabase user; recovery handling includes `PASSWORD_RECOVERY` and `updateUser`.
+- [x] Validate Supabase configuration, Auth API reachability, project schema/RLS posture where safely queryable, route coverage, tests, and production build without creating users. Auth settings returned HTTP 200; Supabase config and existing auth tests passed; type-check/build passed; no application Supabase tables or RLS definitions exist yet, so there are no private app policies to verify.
+- [ ] Publish the validated checkpoint and verify public/auth route responses in production.
+- [x] Leave sign-up, sign-in, session persistence, logout, and password recovery live-flow testing explicitly pending for manual verification with a disposable account. No real account or credentials were requested or used.

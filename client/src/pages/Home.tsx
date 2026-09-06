@@ -301,12 +301,12 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </nav>
-          <a className="button button--lime button--small header-cta" href="#get-started">Get Started <ArrowUpRight size={15} /></a>
+          <a className="header-signin" href="/auth">Sign in</a><a className="button button--lime button--small header-cta" href="#get-started">Get Started <ArrowUpRight size={15} /></a>
           <button className="mobile-menu-button" type="button" aria-label={mobileOpen ? "Close navigation" : "Open navigation"} aria-expanded={mobileOpen} onClick={() => setMobileOpen((current) => !current)}>
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
-        {mobileOpen && <nav className="mobile-nav" aria-label="Mobile navigation">{navItems.map((item) => <a key={item.href} href={item.href} onClick={closeMobile}>{item.label}<ArrowUpRight size={15} /></a>)}<a className="button button--lime" href="#get-started" onClick={closeMobile}>Get Started <ArrowUpRight size={15} /></a></nav>}
+        {mobileOpen && <nav className="mobile-nav" aria-label="Mobile navigation">{navItems.map((item) => <a key={item.href} href={item.href} onClick={closeMobile}>{item.label}<ArrowUpRight size={15} /></a>)}<a href="/auth" onClick={closeMobile}>Sign in <ArrowUpRight size={15} /></a><a className="button button--lime" href="#get-started" onClick={closeMobile}>Get Started <ArrowUpRight size={15} /></a></nav>}
       </header>
 
       <main>
