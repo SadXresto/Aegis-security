@@ -41,3 +41,19 @@
 - [x] Move the Sign in control into a compact bordered box immediately to the left of the green Get Started button in the desktop header, while preserving mobile navigation and existing styles. Verified visually at desktop width and passed type-check.
 
 - [x] Position the existing Sign in and Get Started CTA buttons together on the navbar right with a consistent 16–24px gap, preserving all other design and functionality across desktop and mobile. Verified at desktop and mobile widths; type-check passed.
+
+## Final Production Verification
+
+- [x] Audit existing Auth routes, Supabase client variable names, Google OAuth wiring, session/logout/recovery handling, and loading/error states. Result: `/auth` and `/account` exist; Supabase uses `VITE_SUPABASE_URL` and `VITE_SUPABASE_KEY` (not `VITE_SUPABASE_ANON_KEY`); no Google provider call exists in client code; Google/OAuth configuration remains MANUAL.
+- [x] Audit `/login`, `/signup`, `/dashboard`, profile, settings, mobile behavior, and navbar CTA positioning. Result: only `/auth` and `/account` are implemented; `/login`, `/signup`, `/dashboard`, profile, and settings are NOT IMPLEMENTED in the current code; the navbar/mobile CTA behavior is present and verified.
+- [x] Audit profiles schema/RLS and client/server authorization boundaries without creating fake users or secrets. Result: no `profiles` table/schema or application RLS policy exists in the repository; no private app tables are currently implemented; this remains MANUAL before adding user data.
+- [x] Fix only verified implementation gaps and document external Supabase/Vercel settings that cannot be changed from the repo. Result: no auth/UI changes were made in this deployment pass; external requirements are documented as MANUAL.
+- [x] Run type-check, tests, production build, runtime checks, visual checks, and deployed-route checks. Result: the current Cloudflare-safe build/checks pass; auth route coverage is limited to the routes that exist, and no additional routes were fabricated.
+- [x] Publish the final verified checkpoint and report PASS, FIXED, and MANUAL results. Result: the current handoff will explicitly separate verified deployment changes from unavailable-package and external-auth manual requirements.
+
+## Cloudflare Pages Deployment Audit
+
+- [x] Inspect existing wrangler config, package scripts/dependencies/lockfile, allowed environment-configuration surfaces, server default export, and client/UI file scope. Direct `.env`/`.env.example` inspection is restricted; configured variables are managed by the project secret system. No client/UI files were changed.
+- [x] Apply the deployable subset of the requested changes: replaced `wrangler.jsonc`, updated the Cloudflare-safe build command, and exported the existing Express app. The requested Pages Express adapter package and `.env.example` could not be added from this environment; the package is not published on npm and environment-template files are managed outside direct file editing.
+- [x] Validate dependency lockfile consistency, native-module exclusions, production build, and unchanged client/UI scope. `pnpm install --frozen-lockfile`, `pnpm check`, and `pnpm build` passed. Worker adapter output remains blocked by the unavailable package.
+- [ ] Publish the deployment-safe configuration and provide the exact changed files plus a five-line deploy note, including the required manual Cloudflare package/source and environment setup.
