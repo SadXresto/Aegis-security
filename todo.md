@@ -57,3 +57,8 @@
 - [x] Apply the deployable subset of the requested changes: replaced `wrangler.jsonc`, updated the Cloudflare-safe build command, and exported the existing Express app. The requested Pages Express adapter package and `.env.example` could not be added from this environment; the package is not published on npm and environment-template files are managed outside direct file editing.
 - [x] Validate dependency lockfile consistency, native-module exclusions, production build, and unchanged client/UI scope. `pnpm install --frozen-lockfile`, `pnpm check`, and `pnpm build` passed. Worker adapter output remains blocked by the unavailable package.
 - [x] Publish the deployment-safe configuration and provide the exact changed files plus a five-line deploy note, including the required manual Cloudflare package/source and environment setup. Checkpoint `97bf1545` contains the deployable subset; the unavailable adapter, Pages Function, and env template are documented as MANUAL blockers.
+
+## Full Repository Export
+
+- [ ] Create a ZIP of the current repository excluding `node_modules`, `dist`, and `.env` files.
+- [ ] Verify the archive includes the complete current repository and provide the download link.
