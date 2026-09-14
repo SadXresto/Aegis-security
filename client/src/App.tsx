@@ -2,12 +2,17 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { ProtectedRoute } from "./contexts/AuthContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import Account from "./pages/Account";
 import Article from "./pages/Article";
 import Auth from "./pages/Auth";
-import Account from "./pages/Account";
+import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Learn from "./pages/Learn";
+import NotFound from "./pages/NotFound";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
@@ -18,9 +23,24 @@ function App() {
         ? <Article />
         : path === "/auth"
           ? <Auth />
-          : path === "/account"
-            ? <Account />
-            : <Home />;
+          : path === "/forgot-password"
+            ? <ForgotPassword />
+            : path === "/reset-password"
+              ? <ResetPassword />
+              : path === "/verify-email"
+                ? <VerifyEmail />
+                : path === "/account"
+                  ? (
+                    <ProtectedRoute>
+                      <Account />
+                    </ProtectedRoute>
+                  )
+                  : path === "/"
+                    ? <Home />
+                    : path === "/404"
+                      ? <NotFound />
+                      : // Unknown paths get the friendly 404 page.
+                        <NotFound />;
 
   return (
     <ErrorBoundary>

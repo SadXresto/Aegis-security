@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, LogOut, ShieldCheck } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
+import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/contexts/AuthContext";
+import { friendlyAuthError } from "@/lib/authErrors";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [signingOut, setSigningOut] = useState(false);
 
   const { signOut: contextSignOut } = useAuth();
 
@@ -39,16 +42,23 @@ export default function Account() {
   }
 
   const signOut = async () => {
-    await supabase?.auth.signOut();
-    await contextSignOut();
-    window.location.href = "/";
+    if (signingOut) return;
+    setSigningOut(true);
+    try {
+      await supabase?.auth.signOut();
+      await contextSignOut();
+      window.location.href = "/";
+    } catch (caught) {
+      setSigningOut(false);
+      toast.error(friendlyAuthError(caught));
+    }
   };
 
   return (
     <main className="auth-page">
       <div className="auth-gridline" aria-hidden="true" />
       <div className="account-wrap">
-        <header className="account-header"><a href="/" className="auth-back"><ArrowLeft size={15} /> Back to Aegis</a><button className="account-signout" type="button" onClick={signOut}><LogOut size={15} /> Sign out</button></header>
+        <header className="account-header"><a href="/" className="auth-back"><ArrowLeft size={15} /> Back to Aegis</a><button className="account-signout" type="button" onClick={signOut} disabled={signingOut}>{signingOut ? <Loader2 size={15} className="spin" /> : <LogOut size={15} />} Sign out</button></header>
         <section className="account-hero"><span className="mono">PRIVATE WORKSPACE / 001</span><h1>Your Aegis account.</h1><p>Authentication is live. Your learning progress and project workspace features can be added here without changing the public site.</p></section>
         <section className="account-grid"><div className="account-panel"><span className="mono">ACCOUNT</span><h2>{user.email}</h2><p>Signed in with email/password. Session persistence is handled by Supabase Auth.</p></div><div className="account-panel account-panel--muted"><span className="mono">NEXT MODULE</span><h2>Learning progress</h2><p>Ready for the next phase: storing completed lessons against your account.</p><a href="/learn">Continue learning <ArrowRight size={15} /></a></div></section>
       </div>

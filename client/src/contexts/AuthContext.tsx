@@ -10,10 +10,40 @@ type AuthContextValue = {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<void>;
+  resendConfirmation: (email: string) => Promise<void>;
   refresh: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
+
+/** Remember where an unauthenticated visitor wanted to go so we can return them after login. */
+export function rememberIntendedPath() {
+  try {
+    const path = `${window.location.pathname}${window.location.search}`;
+    if (path && path !== "/auth" && path !== "/") {
+      sessionStorage.setItem("aegis.returnTo", path);
+    }
+  } catch {
+    /* storage unavailable — skip */
+  }
+}
+
+export function getIntendedPath() {
+  try {
+    return sessionStorage.getItem("aegis.returnTo") || "/account";
+  } catch {
+    return "/account";
+  }
+}
+
+export function clearIntendedPath() {
+  try {
+    sessionStorage.removeItem("aegis.returnTo");
+  } catch {
+    /* ignore */
+  }
+}
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [client, setClient] = useState<SupabaseClient | null>(null);
@@ -47,6 +77,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (active && mounted) {
           setError(err instanceof Error ? err.message : "Session check failed");
         }
+      } finally {
+        if (active && mounted) setLoading(false);
       }
     };
 
@@ -93,6 +125,29 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (signOutError) throw signOutError;
   }, [client]);
 
+  const resetPassword = useCallback(
+    async (email: string) => {
+      if (!client) throw new Error("Auth client not ready");
+      const { error: resetError } = await client.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      if (resetError) throw resetError;
+    },
+    [client]
+  );
+
+  const resendConfirmation = useCallback(
+    async (email: string) => {
+      if (!client) throw new Error("Auth client not ready");
+      const { error: resendError } = await client.auth.resend({
+        type: "signup",
+        email,
+      });
+      if (resendError) throw resendError;
+    },
+    [client]
+  );
+
   const refresh = useCallback(async () => {
     if (!client) return;
     const { data } = await client.auth.getUser();
@@ -109,6 +164,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signIn,
         signUp,
         signOut,
+        resetPassword,
+        resendConfirmation,
         refresh,
       }}
     >
@@ -123,18 +180,33 @@ export function useAuth() {
   return ctx;
 }
 
-/** Redirects unauthenticated users to /auth if they are not already there. */
+/**
+ * Redirects unauthenticated users to the sign-in page, preserving their
+ * intended destination via ?returnTo= so they can be returned there after
+ * logging in.
+ */
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { user, loading, isAuthenticated } = useAuth();
+  const { loading, isAuthenticated } = useAuth();
+
+  const intended =
+    typeof window !== "undefined"
+      ? `${window.location.pathname}${window.location.search}`
+      : "/account";
 
   useEffect(() => {
     if (!loading && !isAuthenticated && typeof window !== "undefined") {
-      window.location.href = "/auth";
+      rememberIntendedPath();
+      window.location.href = `/auth?returnTo=${encodeURIComponent(intended)}`;
     }
-  }, [loading, isAuthenticated]);
+  }, [loading, isAuthenticated, intended]);
 
   if (loading || !isAuthenticated) {
-    return null;
+    // Centered spinner keeps the existing session-check UX on /account.
+    return (
+      <main className="auth-page auth-page--center" aria-busy="true">
+        <span>Checking your session…</span>
+      </main>
+    );
   }
 
   return <>{children}</>;
