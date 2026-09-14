@@ -1,28 +1,38 @@
-import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
-import type { User } from "../../drizzle/schema";
-import { sdk } from "./sdk";
+import type { AppUser } from "../supabase.server";
+import {
+  getAuthUserFromToken,
+  getOrCreateAppUser,
+  isSupabaseConfigured,
+} from "../supabase.server";
 
 export type TrpcContext = {
-  req: CreateExpressContextOptions["req"];
-  res: CreateExpressContextOptions["res"];
-  user: User | null;
+  user: AppUser | null;
 };
 
-export async function createContext(
-  opts: CreateExpressContextOptions
-): Promise<TrpcContext> {
-  let user: User | null = null;
+export async function createContext(opts: {
+  authorizationHeader?: string | null;
+}): Promise<TrpcContext> {
+  let user: AppUser | null = null;
 
   try {
-    user = await sdk.authenticateRequest(opts.req);
+    const authHeader = opts.authorizationHeader ?? "";
+    const match = /^Bearer\s+(.+)$/i.exec(authHeader);
+    const token = match ? match[1] : undefined;
+
+    if (token && isSupabaseConfigured()) {
+      const authUser = await getAuthUserFromToken(token);
+      if (authUser) {
+        user = await getOrCreateAppUser(
+          authUser.id,
+          authUser.email ?? null,
+          authUser.user_metadata?.full_name ?? null
+        );
+      }
+    }
   } catch (error) {
-    // Authentication is optional for public procedures.
+    console.warn("[Auth] Could not resolve request user:", error);
     user = null;
   }
 
-  return {
-    req: opts.req,
-    res: opts.res,
-    user,
-  };
+  return { user };
 }

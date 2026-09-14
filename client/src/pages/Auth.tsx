@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Auth() {
   const [mode, setMode] = useState<"signin" | "signup" | "reset" | "update">("signin");
@@ -10,6 +11,8 @@ export default function Auth() {
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
   const [recoveryReady, setRecoveryReady] = useState(false);
+
+  const { signIn, signUp: clientSignUp } = useAuth();
 
   useEffect(() => {
     document.title = mode === "update" ? "Choose a new password | Aegis Secure" : "Sign in | Aegis Secure";
@@ -45,12 +48,10 @@ export default function Auth() {
         if (resetError) throw resetError;
         setMessage("If an account exists for that email, a reset link is on its way.");
       } else if (mode === "signup") {
-        const { error: signUpError } = await supabase.auth.signUp({ email, password });
-        if (signUpError) throw signUpError;
+        await clientSignUp(email, password);
         setMessage("Check your inbox to confirm your email, then return here to sign in.");
       } else {
-        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-        if (signInError) throw signInError;
+        await signIn(email, password);
         window.location.href = "/account";
       }
     } catch (caught) {

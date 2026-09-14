@@ -11,7 +11,16 @@ import Learn from "./pages/Learn";
 
 function App() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
-  const page = path === "/learn" ? <Learn /> : path === "/learn/what-is-cybersecurity" ? <Article /> : path === "/auth" ? <Auth /> : path === "/account" ? <Account /> : <Home />;
+  const page =
+    path === "/learn"
+      ? <Learn />
+      : path === "/learn/what-is-cybersecurity"
+        ? <Article />
+        : path === "/auth"
+          ? <Auth />
+          : path === "/account"
+            ? <Account />
+            : <Home />;
 
   return (
     <ErrorBoundary>

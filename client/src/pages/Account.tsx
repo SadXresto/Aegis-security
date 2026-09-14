@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2, LogOut, ShieldCheck } from "lucide-react";
 import type { User } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Account() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  const { signOut: contextSignOut } = useAuth();
 
   useEffect(() => {
     if (!supabase) {
@@ -37,6 +40,7 @@ export default function Account() {
 
   const signOut = async () => {
     await supabase?.auth.signOut();
+    await contextSignOut();
     window.location.href = "/";
   };
 
