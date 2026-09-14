@@ -154,6 +154,11 @@ const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(
 
 export default defineConfig({
   plugins,
+  // Also embed plain SUPABASE_* vars into the client bundle so the frontend works
+  // with either VITE_SUPABASE_* or SUPABASE_* naming. Vite only inlines keys that
+  // are explicitly referenced via import.meta.env in client code — never expose or
+  // reference SUPABASE_SERVICE_ROLE_KEY through import.meta.env on the client.
+  envPrefix: ["VITE_", "SUPABASE_"],
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

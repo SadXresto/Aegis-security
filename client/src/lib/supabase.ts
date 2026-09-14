@@ -1,8 +1,15 @@
 import { createBrowserClient, createServerClient } from "@supabase/ssr";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined;
-const key = import.meta.env.VITE_SUPABASE_KEY as string | undefined;
+// Accept both naming conventions (VITE_* preferred, plain SUPABASE_* as fallback).
+// Plain SUPABASE_* vars are exposed to the client bundle via envPrefix in vite.config.ts.
+const url =
+  (import.meta.env.VITE_SUPABASE_URL as string | undefined) ??
+  (import.meta.env.SUPABASE_URL as string | undefined);
+const key =
+  (import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined) ??
+  (import.meta.env.VITE_SUPABASE_KEY as string | undefined) ??
+  (import.meta.env.SUPABASE_ANON_KEY as string | undefined);
 
 function readAllCookies(): Record<string, string> {
   if (typeof document === "undefined") return {};
@@ -32,7 +39,7 @@ function writeAllCookies(items: { name: string; value: string; options: Record<s
 export function createSupabaseClient(): SupabaseClient {
   if (!url || !key) {
     throw new Error(
-      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_KEY."
+      "Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY (or VITE_SUPABASE_KEY / SUPABASE_URL / SUPABASE_ANON_KEY)."
     );
   }
 
