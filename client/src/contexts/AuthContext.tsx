@@ -30,10 +30,11 @@ export function rememberIntendedPath() {
 }
 
 export function getIntendedPath() {
+  // The workspace dashboard is the default destination after signing in.
   try {
-    return sessionStorage.getItem("aegis.returnTo") || "/account";
+    return sessionStorage.getItem("aegis.returnTo") || "/dashboard";
   } catch {
-    return "/account";
+    return "/dashboard";
   }
 }
 
