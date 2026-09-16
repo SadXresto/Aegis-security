@@ -11,7 +11,6 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
-import LandingNew from "./pages/LandingNew";
 import Learn from "./pages/Learn";
 import NotFound from "./pages/NotFound";
 import Passwords from "./pages/Passwords";
@@ -24,7 +23,6 @@ import VerifyEmail from "./pages/VerifyEmail";
 /** Public routes keep their existing behaviour; unknown paths fall back to the 404 page. */
 const PUBLIC_ROUTES: Record<string, ReactElement> = {
   "/": <Home />,
-  "/landing-new": <LandingNew />,
   "/learn": <Learn />,
   "/learn/what-is-cybersecurity": <Article />,
   "/auth": <Auth />,
