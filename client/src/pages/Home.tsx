@@ -35,12 +35,12 @@ import { toast } from "sonner";
 type DashboardTab = "overview" | "findings" | "guidance";
 
 const navItems = [
-  { label: "Product", href: "#product" },
-  { label: "Learn", href: "/learn" },
-  { label: "Features", href: "#features" },
+  { label: "Home", href: "#top" },
+  { label: "Services", href: "/services" },
+  { label: "Marketplace", href: "/marketplace" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
+  { label: "About", href: "#trust" },
 ];
 
 const features = [

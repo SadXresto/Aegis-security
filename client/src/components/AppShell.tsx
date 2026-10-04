@@ -7,6 +7,8 @@ import {
   LayoutDashboard,
   Loader2,
   LogOut,
+  ShoppingBag,
+  BriefcaseBusiness,
   Radar,
   Settings,
   ShieldCheck,
@@ -19,6 +21,9 @@ import { getDisplayName, getEmail, getInitials } from "@/lib/aegis";
 
 const PRIMARY_NAV = [
   { path: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { path: "/services", label: "Services", icon: BriefcaseBusiness },
+  { path: "/marketplace", label: "Marketplace", icon: ShoppingBag },
+  { path: "/projects", label: "My Projects", icon: BriefcaseBusiness },
   { path: "/reports", label: "Reports", icon: BookOpen },
   { path: "/threats", label: "Threats", icon: Radar },
   { path: "/passwords", label: "Passwords", icon: KeyRound },

@@ -12,11 +12,14 @@ import Dashboard from "./pages/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword";
 import Home from "./pages/Home";
 import Learn from "./pages/Learn";
+import Marketplace from "./pages/Marketplace";
 import NotFound from "./pages/NotFound";
 import Passwords from "./pages/Passwords";
+import Projects from "./pages/Projects";
 import Reports from "./pages/Reports";
 import ResetPassword from "./pages/ResetPassword";
 import Settings from "./pages/Settings";
+import Services from "./pages/Services";
 import Threats from "./pages/Threats";
 import VerifyEmail from "./pages/VerifyEmail";
 
@@ -31,12 +34,15 @@ const PUBLIC_ROUTES: Record<string, ReactElement> = {
   "/forgot-password": <ForgotPassword />,
   "/reset-password": <ResetPassword />,
   "/verify-email": <VerifyEmail />,
+  "/services": <Services />,
+  "/marketplace": <Marketplace />,
   "/404": <NotFound />,
 };
 
 /** Signed-in workspace pages. Each one is guarded and preserves the intended path. */
 const PROTECTED_ROUTES: Record<string, ReactElement> = {
   "/dashboard": <Dashboard />,
+  "/projects": <Projects />,
   "/reports": <Reports />,
   "/threats": <Threats />,
   "/passwords": <Passwords />,
